@@ -1,14 +1,16 @@
 # -*- org -*-
 
 This document describes YANG mechanisms for
-extending the utility of the 'yang-data' extension statement
+defining abstract data st5ructures with YANG.
+It is intended to replace and extend
+the 'yang-data' extension statement
 defined in RFC 8040.
 
 * Introduction
 
 There is a need for standard mechanisms to allow the
 definition of abstract data that is not intended to
-be implemented as configuration data or state data.
+be implemented as configuration or operational state.
 The 'yang-data' extension statement from RFC 8040 ^RFC8040^
 is defined for this purpose, however it is limited in its
 functionality.
@@ -29,6 +31,18 @@ existing YANG "augment" statement, which cannot be used
 because a YANG compiler or other tool is not required to
 understand the "yang-data" extension.
 
+The "yang-data" extension from ^RFC8040^ has been copied here
+and updated to be more flexible. There is no longer a requirement
+for the yang-data statement to result in exactly one container object.
+There is no longer an assumption that a yang-data structure can
+only be used as a top-level abstraction, instead of nested within
+some other data structure. The use of the yang-data statement
+is similar to the uses-stmt.  The designer must be aware of the
+contents of the grouping being used and the parent node (if any)
+of the uses-stmt. Only top-level data structures need to result
+in a single container object.
+
+
 ** Terminology
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL
@@ -36,12 +50,15 @@ NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED",  "MAY", and
 "OPTIONAL" in this document are to be interpreted as described in
 ^RFC2119^.
 
-*** NETCONF
+*** NMDA
 
-The following terms are defined in ^RFC6241^:
+The following terms are defined in the
+Network Management Datastore Architecture
+(NMDA) ^I-D.ietf-netmod-revised-datastores^.
+and are not redefined here:
 
-- configuration data
-- state data
+- configuration
+- operational state
 
 *** YANG
 
@@ -70,8 +87,8 @@ The following terms are defined in ^RFC7950^:
 ** Restrictions on Conceptual YANG Data
 
 This document places restrictions on the "yang-data" external
-statements that can be used with the "augment-yang-data"
-extension. The conceptual data definitions
+statements that can be used with the "yang-data" and
+"augment-yang-data" extensions. The conceptual data definitions
 are considered to be in the same identifier namespace
 as defined in section 6.2.1 of ^RFC7950^. In particular,
 bullet 7:
@@ -86,11 +103,16 @@ or "augment-yang-data" statements cannot have the same local-name
 as sibling nodes from regular YANG data-def statements or
 other "yang-data" or "augment-yang-data" statements.
 
+This does not mean a yang data template has to be used as
+a top-level protocol message or other top-level data structure.
+A yang data template does not have to result in a single container.
+
 ** YANG Data Extensions Module @mod@
 
-The "yang-data-ext" module defines the 'augment-yang-data' extension
+The "yang-data-ext" module defines the "augment-yang-data" extension
 to augment conceptual data already defined with the
-RESTCONF "yang-data" extension.
+"yang-data" extension. The RESTCONF "yang-data" extension has been moved
+to this document and updated.
 
 Note that there is no YANG tree diagram provided because pyang does not
 produce any tree output for a module containing only an extension statement.
@@ -98,7 +120,7 @@ produce any tree output for a module containing only an extension statement.
 # RFC Ed.: update the date below with the date of RFC publication and
 # remove this note.
 
-!! include-figure yang-data-ext.yang extract-to="yang-data-ext@2017-07-03.yang"
+!! include-figure yang-data-ext.yang extract-to="yang-data-ext@2017-10-26.yang"
 
 * IANA Considerations @iana@
 
@@ -125,7 +147,7 @@ TBD
 
 * Security Considerations
 
-This document defines a YANG extension which is used to define
+This document defines YANG extension which are used to define
 conceptual YANG data.  It does not introduce any new vulnerabilities
 beyond those specified in YANG 1.1 ^RFC7950^.
 
@@ -135,20 +157,39 @@ beyond those specified in YANG 1.1 ^RFC7950^.
 
 *! start-appendix
 
-# * Change Log
+* Change Log
 #
 #    -- RFC Ed.: remove this section before publication.
 #
-# The RESTCONF issue tracker can be found here:
-# https://github.com/netconf-wg/restconf/issues
+# The YANG Data Extensions issue tracker can be found here:
+# https://github.com/netmod-wg/yang-data-ext/issues
 #
-# * Open Issues
+** v00 to v01
+
+- Added Martin and Kent as authors
+- Cloned and updated yang-data from RFC 8040
+- Added text to clarify that yang-data does not have to result in a single container
+
+* Open Issues
 #
 #    -- RFC Ed.: remove this section before publication.
 #
-# The RESTCONF issues are tracked on github.com:
+# The YANG Data Extensions issues are tracked on github.com:
 #
-#   https://github.com/netconf-wg/restconf/issues
+#   https://github.com/netmod-wg/yang-data-ext/issues
+
+** uses-yang-data
+
+Is there a need for a separate grouping and uses mechanism for yang-data?
+Currently only real grouping-stmt and uses-stmt are used.
+
+** error-info
+
+Is there a need for a special-purpose extension to define yang-data for
+the contents of the <error-info> node in NETCONF <rpc-error> and
+RESTCONF <errors> responses?  This node is defined with anyxml so
+there is no way for a YANG tool to use real schema nodes, based on the
+RPC operation being requested or the error-app-tag that is being returned.
 
 
 {{document:
@@ -159,4 +200,6 @@ beyond those specified in YANG 1.1 ^RFC7950^.
     title "YANG Data Extensions";
     abbreviation "YANG Data Extensions";
     contributor "author:Andy Bierman:YumaWorks:andy@yumaworks.com";
+    contributor "author:Martin Bjorklund:Tail-f Systems:mbj@tail-f.com";
+    contributor "author:Kent Watsen:Juniper Networks:kwatsen@juniper.net";
 }}
