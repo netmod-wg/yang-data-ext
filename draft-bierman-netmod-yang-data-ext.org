@@ -1,0 +1,162 @@
+# -*- org -*-
+
+This document describes YANG mechanisms for
+extending the utility of the 'yang-data' extension statement
+defined in RFC 8040.
+
+* Introduction
+
+There is a need for standard mechanisms to allow the
+definition of abstract data that is not intended to
+be implemented as configuration data or state data.
+The 'yang-data' extension statement from RFC 8040 ^RFC8040^
+is defined for this purpose, however it is limited in its
+functionality.
+
+The intended use of the "yang-data" extension is to model
+all or part of a protocol message, such as the "errors"
+definition in ietf-restconf.yang ^RFC8040^.
+However, protocols are often layered such that the header or
+payload portions of the message can be extended by
+external documents. The YANG statements that model
+a protocol need to support this extensibility that is
+already found in that protocol.
+
+This document defines a new YANG extension statement
+called "augment-yang-data", which allows abstract data structures
+to be augmented from external modules, similar to the
+existing YANG "augment" statement, which cannot be used
+because a YANG compiler or other tool is not required to
+understand the "yang-data" extension.
+
+** Terminology
+
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL
+NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED",  "MAY", and
+"OPTIONAL" in this document are to be interpreted as described in
+^RFC2119^.
+
+*** NETCONF
+
+The following terms are defined in ^RFC6241^:
+
+- configuration data
+- state data
+
+*** YANG
+
+The following terms are defined in ^RFC7950^:
+
+- absolute-schema-nodeid
+- container
+- data node
+- leaf
+- leaf-list
+- list
+
+
+# *** Terms
+#
+# The following terms are used within this document:
+#
+# *** Tree Diagrams
+#
+# A simplified graphical representation of the data model is used in
+# this document.  The meaning of the symbols in these
+# diagrams is defined in ^XXXX^.
+
+* Definitions
+
+** Restrictions on Conceptual YANG Data
+
+This document places restrictions on the "yang-data" external
+statements that can be used with the "augment-yang-data"
+extension. The conceptual data definitions
+are considered to be in the same identifier namespace
+as defined in section 6.2.1 of ^RFC7950^. In particular,
+bullet 7:
+
+   All leafs, leaf-lists, lists, containers, choices, rpcs, actions,
+   notifications, anydatas, and anyxmls defined (directly or through
+   a "uses" statement) within a parent node or at the top level of
+   the module or its submodules share the same identifier namespace.
+
+This means that conceptual data defined with the "yang-data"
+or "augment-yang-data" statements cannot have the same local-name
+as sibling nodes from regular YANG data-def statements or
+other "yang-data" or "augment-yang-data" statements.
+
+** YANG Data Extensions Module @mod@
+
+The "yang-data-ext" module defines the 'augment-yang-data' extension
+to augment conceptual data already defined with the
+RESTCONF "yang-data" extension.
+
+Note that there is no YANG tree diagram provided because pyang does not
+produce any tree output for a module containing only an extension statement.
+
+# RFC Ed.: update the date below with the date of RFC publication and
+# remove this note.
+
+!! include-figure yang-data-ext.yang extract-to="yang-data-ext@2017-07-03.yang"
+
+* IANA Considerations @iana@
+
+** YANG Module Registry
+
+TBD
+
+# This document registers one URI as a namespace in the IETF XML registry
+# ^RFC3688^. Following the format in RFC 3688, the following
+# registration is requested:
+#
+#     URI: urn:ietf:params:xml:ns:yang:ietf-restconf
+#     Registrant Contact: The NETMOD WG of the IETF.
+#     XML: N/A, the requested URI is an XML namespace.
+#
+# This document registers one YANG module in the YANG Module Names
+# registry ^RFC6020^:
+#
+#  name:         ietf-yang-data-ext
+#  namespace:    urn:ietf:params:xml:ns:yang:ietf-yang-data-ext
+#  prefix:       yd
+#  // RFC Ed.: replace XXXX with RFC number and remove this note
+#  reference:    RFCXXXX
+
+* Security Considerations
+
+This document defines a YANG extension which is used to define
+conceptual YANG data.  It does not introduce any new vulnerabilities
+beyond those specified in YANG 1.1 ^RFC7950^.
+
+
+# * Acknowledgements
+
+
+*! start-appendix
+
+# * Change Log
+#
+#    -- RFC Ed.: remove this section before publication.
+#
+# The RESTCONF issue tracker can be found here:
+# https://github.com/netconf-wg/restconf/issues
+#
+# * Open Issues
+#
+#    -- RFC Ed.: remove this section before publication.
+#
+# The RESTCONF issues are tracked on github.com:
+#
+#   https://github.com/netconf-wg/restconf/issues
+
+
+{{document:
+    name ;
+    ipr trust200902;
+    category std;
+    references yang-data-ext-back.xml;
+    title "YANG Data Extensions";
+    abbreviation "YANG Data Extensions";
+    contributor "author:Andy Bierman:YumaWorks:andy@yumaworks.com";
+}}

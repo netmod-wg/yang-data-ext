@@ -1,6 +1,6 @@
 # draft-bierman-netmod-yang-data-ext
 
-This repository is for the development of a IETF draft for the
+This repository is for the development of an Individual draft for the
 [NETMOD working group](http://datatracker.ietf.org/wg/netmod/charter/).
 
 ## Links
