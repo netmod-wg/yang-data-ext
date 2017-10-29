@@ -134,10 +134,6 @@ module yang-data-ext {
        additional data to be added to the specific YANG data template,
        identified by the 'path' argument.
 
-       Note that this extension does not define a media-type.
-       A specification using this extension MUST specify the
-       message encoding rules, including the content media type.
-
        The mandatory 'path' parameter value identifies the YANG
        conceptual data node that is being augmented, represented
        as an absolute-schema-nodeid string.

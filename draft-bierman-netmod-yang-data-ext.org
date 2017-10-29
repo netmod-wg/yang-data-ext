@@ -1,9 +1,9 @@
 # -*- org -*-
 
 This document describes YANG mechanisms for
-defining abstract data st5ructures with YANG.
+defining abstract data structures with YANG.
 It is intended to replace and extend
-the 'yang-data' extension statement
+the "yang-data" extension statement
 defined in RFC 8040.
 
 * Introduction
@@ -11,36 +11,35 @@ defined in RFC 8040.
 There is a need for standard mechanisms to allow the
 definition of abstract data that is not intended to
 be implemented as configuration or operational state.
-The 'yang-data' extension statement from RFC 8040 ^RFC8040^
+The "yang-data" extension statement from RFC 8040 ^RFC8040^
 is defined for this purpose, however it is limited in its
 functionality.
 
-The intended use of the "yang-data" extension is to model
-all or part of a protocol message, such as the "errors"
-definition in ietf-restconf.yang ^RFC8040^.
-However, protocols are often layered such that the header or
-payload portions of the message can be extended by
-external documents. The YANG statements that model
-a protocol need to support this extensibility that is
-already found in that protocol.
+The intended use of the "yang-data" extension is to model all or part
+of a protocol message, such as the "errors" definition in
+ietf-restconf.yang ^RFC8040^, or the contents of a file.  However,
+protocols are often layered such that the header or payload portions
+of the message can be extended by external documents. The YANG
+statements that model a protocol need to support this extensibility
+that is already found in that protocol.
 
-This document defines a new YANG extension statement
-called "augment-yang-data", which allows abstract data structures
-to be augmented from external modules, similar to the
-existing YANG "augment" statement, which cannot be used
-because a YANG compiler or other tool is not required to
-understand the "yang-data" extension.
+This document defines a new YANG extension statement called
+"augment-yang-data", which allows abstract data structures to be
+augmented from external modules, similar to the existing YANG
+"augment" statement.  Note that "augment" cannot be used to augement a
+yang data structure since a YANG compiler or other tool is not
+required to understand the "yang-data" extension.
 
-The "yang-data" extension from ^RFC8040^ has been copied here
-and updated to be more flexible. There is no longer a requirement
-for the yang-data statement to result in exactly one container object.
-There is no longer an assumption that a yang-data structure can
-only be used as a top-level abstraction, instead of nested within
-some other data structure. The use of the yang-data statement
-is similar to the uses-stmt.  The designer must be aware of the
-contents of the grouping being used and the parent node (if any)
-of the uses-stmt. Only top-level data structures need to result
-in a single container object.
+The "yang-data" extension from ^RFC8040^ has been copied here and
+updated to be more flexible. There is no longer a requirement for the
+"yang-data" statement to result in exactly one container object.
+There is no longer an assumption that a yang data structure can only
+be used as a top-level abstraction, instead of nested within some
+other data structure. The use of the "yang-data" statement is similar to
+the "uses" statement.  The designer must be aware of the contents of
+the grouping being used and the parent node (if any) of the "uses"
+statement. Only top-level data structures need to result in a single
+container object.
 
 
 ** Terminology
@@ -49,6 +48,11 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL
 NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED",  "MAY", and
 "OPTIONAL" in this document are to be interpreted as described in
 ^RFC2119^.
+
+The following terms are used within this document:
+
+- yang data structure: A data structure defined with the "yang-data"
+  statement.
 
 *** NMDA
 
@@ -66,6 +70,7 @@ The following terms are defined in ^RFC7950^:
 
 - absolute-schema-nodeid
 - container
+- data definition statement
 - data node
 - leaf
 - leaf-list
@@ -100,12 +105,12 @@ bullet 7:
 
 This means that conceptual data defined with the "yang-data"
 or "augment-yang-data" statements cannot have the same local-name
-as sibling nodes from regular YANG data-def statements or
+as sibling nodes from regular YANG data definition statements or
 other "yang-data" or "augment-yang-data" statements.
 
-This does not mean a yang data template has to be used as
+This does not mean a yang data structure has to be used as
 a top-level protocol message or other top-level data structure.
-A yang data template does not have to result in a single container.
+A yang data structure does not have to result in a single container.
 
 ** YANG Data Extensions Module @mod@
 
@@ -114,11 +119,8 @@ to augment conceptual data already defined with the
 "yang-data" extension. The RESTCONF "yang-data" extension has been moved
 to this document and updated.
 
-Note that there is no YANG tree diagram provided because pyang does not
-produce any tree output for a module containing only an extension statement.
-
-# RFC Ed.: update the date below with the date of RFC publication and
-# remove this note.
+RFC Ed.: update the date below with the date of RFC publication and
+remove this note.
 
 !! include-figure yang-data-ext.yang extract-to="yang-data-ext@2017-10-26.yang"
 
@@ -147,13 +149,11 @@ TBD
 
 * Security Considerations
 
-This document defines YANG extension which are used to define
+This document defines YANG extensions that are used to define
 conceptual YANG data.  It does not introduce any new vulnerabilities
 beyond those specified in YANG 1.1 ^RFC7950^.
 
-
 # * Acknowledgements
-
 
 *! start-appendix
 
