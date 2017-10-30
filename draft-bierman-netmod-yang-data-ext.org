@@ -35,11 +35,7 @@ updated to be more flexible. There is no longer a requirement for the
 "yang-data" statement to result in exactly one container object.
 There is no longer an assumption that a yang data structure can only
 be used as a top-level abstraction, instead of nested within some
-other data structure. The use of the "yang-data" statement is similar to
-the "uses" statement.  The designer must be aware of the contents of
-the grouping being used and the parent node (if any) of the "uses"
-statement. Only top-level data structures need to result in a single
-container object.
+other data structure.
 
 
 ** Terminology
