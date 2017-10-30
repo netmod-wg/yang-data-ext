@@ -26,7 +26,7 @@ that is already found in that protocol.
 This document defines a new YANG extension statement called
 "augment-yang-data", which allows abstract data structures to be
 augmented from external modules, similar to the existing YANG
-"augment" statement.  Note that "augment" cannot be used to augement a
+"augment" statement.  Note that "augment" cannot be used to augment a
 yang data structure since a YANG compiler or other tool is not
 required to understand the "yang-data" extension.
 
@@ -118,7 +118,7 @@ to this document and updated.
 RFC Ed.: update the date below with the date of RFC publication and
 remove this note.
 
-!! include-figure yang-data-ext.yang extract-to="yang-data-ext@2017-10-26.yang"
+!! include-figure yang-data-ext.yang extract-to="yang-data-ext@2017-10-30.yang"
 
 * IANA Considerations @iana@
 

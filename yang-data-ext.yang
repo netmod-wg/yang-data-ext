@@ -35,7 +35,7 @@ module yang-data-ext {
      Relating to IETF Documents
      (http://trustee.ietf.org/license-info).";
 
-  revision 2017-10-26 {
+  revision 2017-10-30 {
     description
       "Initial revision.";
     reference
