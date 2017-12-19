@@ -181,9 +181,9 @@ module yang-data-ext {
        Example:
 
           foo.yang {
-             import ietf-restconf { prefix rc; }
+             import yang-data-ext { prefix yd; }
 
-             rc:yang-data foo-data {
+             yd:yang-data foo-data {
                container foo-con { }
              }
           }
