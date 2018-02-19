@@ -118,7 +118,7 @@ to this document and updated.
 RFC Ed.: update the date below with the date of RFC publication and
 remove this note.
 
-!! include-figure yang-data-ext.yang extract-to="ietf-yang-data-ext@2018-02-19.yang"
+!! include-figure ietf-yang-data-ext.yang extract-to="ietf-yang-data-ext@2018-02-19.yang"
 
 * IANA Considerations @iana@
 
@@ -153,18 +153,15 @@ beyond those specified in YANG 1.1 ^RFC7950^.
 
 *! start-appendix
 
-* Change Log
+# * Change Log
 #
 #    -- RFC Ed.: remove this section before publication.
 #
 # The YANG Data Extensions issue tracker can be found here:
 # https://github.com/netmod-wg/yang-data-ext/issues
 #
-** v00 to v01
-
-- Added Martin and Kent as authors
-- Cloned and updated yang-data from RFC 8040
-- Added text to clarify that yang-data does not have to result in a single container
+# ** v00 to v01
+#
 
 * Open Issues
 #

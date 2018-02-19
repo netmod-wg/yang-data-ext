@@ -47,13 +47,13 @@ ifeq (.org,$(draft_type))
 endif
 
 validate:
-	pyang --ietf yang-data-ext.yang
+	pyang --ietf ietf-yang-data-ext.yang
 
 
 $(next).xml: $(draft).xml
 	sed -e"s/$(basename $<)-latest/$(basename $@)/" $< > $@
 
-$(draft).xml: yang-data-ext-back.xml yang-data-ext.yang
+$(draft).xml: yang-data-ext-back.xml ietf-yang-data-ext.yang
 
 
 .INTERMEDIATE: $(draft).xml
