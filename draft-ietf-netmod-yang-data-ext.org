@@ -110,7 +110,7 @@ A yang data structure does not have to result in a single container.
 
 ** YANG Data Extensions Module @mod@
 
-The "yang-data-ext" module defines the "augment-yang-data" extension
+The "ietf-yang-data-ext" module defines the "augment-yang-data" extension
 to augment conceptual data already defined with the
 "yang-data" extension. The RESTCONF "yang-data" extension has been moved
 to this document and updated.
@@ -118,7 +118,7 @@ to this document and updated.
 RFC Ed.: update the date below with the date of RFC publication and
 remove this note.
 
-!! include-figure yang-data-ext.yang extract-to="yang-data-ext@2017-10-30.yang"
+!! include-figure yang-data-ext.yang extract-to="ietf-yang-data-ext@2018-02-19.yang"
 
 * IANA Considerations @iana@
 
