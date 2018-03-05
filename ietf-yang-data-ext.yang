@@ -34,10 +34,11 @@ module ietf-yang-data-ext {
      Relating to IETF Documents
      (http://trustee.ietf.org/license-info).";
 
-  revision 2018-02-19 {
+  revision 2018-03-05 {
     description
       "Initial revision.";
     reference
+       // RFC Ed.: replace XXXX with RFC number and remove this note
       "RFC XXXX: YANG Data Extensions.";
   }
 

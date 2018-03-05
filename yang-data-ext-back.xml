@@ -39,6 +39,37 @@
   </reference>
   -->
 
+  <reference anchor='RFC3688'>
+<front>
+<title>The IETF XML Registry</title>
+<author initials='M.' surname='Mealling' fullname='M. Mealling'>
+<organization /></author>
+<date year='2004' month='January' />
+<abstract>
+<t>This document describes an IANA maintained registry for IETF standards which use Extensible Markup Language (XML) related items such as Namespaces, Document Type Declarations (DTDs), Schemas, and Resource Description Framework (RDF) Schemas.</t></abstract></front>
+<seriesInfo name='BCP' value='81' />
+<seriesInfo name='RFC' value='3688' />
+<format type='TXT' octets='17325' target='http://www.rfc-editor.org/rfc/rfc3688.txt' />
+</reference>
+  <!-- end 3688 -->
+
+
+  <reference anchor="RFC6020">
+    <front>
+      <title>YANG - A Data Modeling Language for the Network Configuration Protocol (NETCONF)</title>
+      <author initials="M." surname="Bjorklund" fullname="M. Bjorklund">
+	<organization/>
+      </author>
+      <date year="2010" month="October"/>
+      <abstract>
+	<t>YANG is a data modeling language used to model configuration and state data manipulated by the Network Configuration Protocol (NETCONF), NETCONF remote procedure calls, and NETCONF notifications. [STANDARDS TRACK]</t>
+      </abstract>
+    </front>
+    <seriesInfo name="RFC" value="6020"/>
+    <format type="TXT" octets="324178" target="http://www.rfc-editor.org/rfc/rfc6020.txt"/>
+  </reference>
+
+
 <reference anchor="RFC7950" target="http://www.rfc-editor.org/info/rfc7950">
 <front>
 <title>The YANG 1.1 Data Modeling Language</title>
@@ -98,15 +129,15 @@ This document describes an HTTP-based protocol that provides a programmatic inte
 <author initials="R" surname="Wilton" fullname="Robert Wilton">
 <organization/>
 </author>
-<date month="October" day="18" year="2017"/>
+<date month="January" day="13" year="2018"/>
 <abstract>
 <t>
 Datastores are a fundamental concept binding the data models written in the YANG data modeling language to network management protocols such as NETCONF and RESTCONF. This document defines an architectural framework for datastores based on the experience gained with the initial simpler model, addressing requirements that were not well supported in the initial model.
 </t>
 </abstract>
 </front>
-<seriesInfo name="Internet-Draft" value="draft-ietf-netmod-revised-datastores-05"/>
-<format type="TXT" target="http://www.ietf.org/internet-drafts/draft-ietf-netmod-revised-datastores-05.txt"/>
+<seriesInfo name="Internet-Draft" value="draft-ietf-netmod-revised-datastores-10"/>
+<format type="TXT" target="http://www.ietf.org/internet-drafts/draft-ietf-netmod-revised-datastores-10.txt"/>
 </reference>
 
 </references>

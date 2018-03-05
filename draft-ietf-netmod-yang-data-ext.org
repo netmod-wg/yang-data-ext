@@ -118,30 +118,28 @@ to this document and updated.
 RFC Ed.: update the date below with the date of RFC publication and
 remove this note.
 
-!! include-figure ietf-yang-data-ext.yang extract-to="ietf-yang-data-ext@2018-02-19.yang"
+!! include-figure ietf-yang-data-ext.yang extract-to="ietf-yang-data-ext@2018-03-05.yang"
 
 * IANA Considerations @iana@
 
 ** YANG Module Registry
 
-TBD
+This document registers one URI as a namespace in the
+"IETF XML Registry" ^RFC3688^:
 
-# This document registers one URI as a namespace in the IETF XML registry
-# ^RFC3688^. Following the format in RFC 3688, the following
-# registration is requested:
-#
-#     URI: urn:ietf:params:xml:ns:yang:ietf-restconf
-#     Registrant Contact: The NETMOD WG of the IETF.
-#     XML: N/A, the requested URI is an XML namespace.
-#
-# This document registers one YANG module in the YANG Module Names
-# registry ^RFC6020^:
-#
-#  name:         ietf-yang-data-ext
-#  namespace:    urn:ietf:params:xml:ns:yang:ietf-yang-data-ext
-#  prefix:       yd
-#  // RFC Ed.: replace XXXX with RFC number and remove this note
-#  reference:    RFCXXXX
+     URI: urn:ietf:params:xml:ns:yang:ietf-yang-data-ext
+     Registrant Contact: The IESG.
+     XML: N/A; the requested URI is an XML namespace.
+
+This document registers one YANG module in the "YANG Module Names"
+registry ^RFC6020^:
+
+     name:         ietf-yang-data-ext
+     namespace:    urn:ietf:params:xml:ns:yang:ietf-yang-data-ext
+     prefix:       yd
+     // RFC Ed.: replace XXXX with RFC number and remove this note
+     reference:    RFC XXXX
+
 
 * Security Considerations
 
@@ -153,36 +151,75 @@ beyond those specified in YANG 1.1 ^RFC7950^.
 
 *! start-appendix
 
-# * Change Log
+* Examples
+
+** yang-data Example
+
+This example shows a simple address book that could be
+stored as an artifact.
+
+   yd:yang-data example-address-book {
+     container address-book {
+       list address {
+         key "last first";
+         leaf last {
+           type string;
+           description "Last name";
+         }
+         leaf first {
+           type string;
+           description "First name";
+         }
+         leaf street {
+           type string;
+           description "Street name";
+         }
+         leaf city {
+           type string;
+           description "City name";
+         }
+         leaf state {
+           type string;
+           description "State name";
+         }
+       }
+     }
+   }
+
+** augment-yang-data Example
+
+This example adds "county" and "zipcode" leafs to
+the address book:
+
+   yd:augment-yang-data /address-book/address {
+     leaf county {
+       type string;
+       description "County name";
+     }
+     leaf zipcode {
+       type string;
+       description "Postal zipcode";
+     }
+   }
+
+* Change Log
 #
 #    -- RFC Ed.: remove this section before publication.
 #
-# The YANG Data Extensions issue tracker can be found here:
-# https://github.com/netmod-wg/yang-data-ext/issues
-#
-# ** v00 to v01
-#
+
+** v00 to v01
+
+- moved open issues to github
+- added examples section
+- filled in IANA considerations
 
 * Open Issues
 #
 #    -- RFC Ed.: remove this section before publication.
 #
-# The YANG Data Extensions issues are tracked on github.com:
-#
-#   https://github.com/netmod-wg/yang-data-ext/issues
+The YANG Data Extensions issues are tracked on github.com:
 
-** uses-yang-data
-
-Is there a need for a separate grouping and uses mechanism for yang-data?
-Currently only real grouping-stmt and uses-stmt are used.
-
-** error-info
-
-Is there a need for a special-purpose extension to define yang-data for
-the contents of the <error-info> node in NETCONF <rpc-error> and
-RESTCONF <errors> responses?  This node is defined with anyxml so
-there is no way for a YANG tool to use real schema nodes, based on the
-RPC operation being requested or the error-app-tag that is being returned.
+   https://github.com/netmod-wg/yang-data-ext/issues
 
 
 {{document:
