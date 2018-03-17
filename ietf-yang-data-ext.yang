@@ -48,40 +48,38 @@ module ietf-yang-data-ext {
       yin-element true;
     }
     description
-      "This extension is used to specify a YANG data template which
+      "This extension is used to specify a YANG data structure which
        represents conceptual data defined in YANG. It is
        intended to describe hierarchical data independent of
        protocol context or specific message encoding format.
        Data definition statements within a yang-data extension
        specify the generic syntax for the specific YANG data
-       template, whose name is the argument of the yang-data
+       structure, whose name is the argument of the yang-data
        extension statement.
 
-       Note that this extension does not define a media-type.
-       A specification using this extension MUST specify the
-       message encoding rules, including the content media type.
+       Note that this extension does not define a media-type.  A
+       specification using this extension MUST specify the message
+       encoding rules, including the content media type, if
+       applicable.
 
        The mandatory 'name' parameter value identifies the YANG
-       data template that is being defined. It contains the
-       template name. This parameter is only used for readability
-       purposes. There are no mechanisms to reuse yang-data by
-       its template name value.
+       data structure that is being defined.
 
        This extension is ignored unless it appears as a top-level
        statement. It MUST contain data definition statements
-       that result in a set of data definition statements.
+       that define a set of data nodes.
 
-       If the yang data template is intended to be used as
-       a top-level structure, then the yang data template needs to
-       result in a single container, so an instance of the YANG data
-       template can thus be translated into an XML instance document,
+       If the YANG data structure is intended to be used as a
+       top-level structure, then the YANG data structure needs to
+       result in a single container, so that an instance of the YANG
+       data structure can be translated into an XML instance document,
        whose top-level element corresponds to the top-level container.
 
        The module name and namespace value for the YANG module using
        the extension statement is assigned to each of the data
-       definition statements resulting from the yang data template.
+       definition statements resulting from the YANG data structure.
        The name of each data definition statement resulting from
-       a yang data template is assigned to a top-level identifier name
+       a YANG data structure is assigned to a top-level identifier name
        in the data node identifier namespace, according to RFC 7950,
        section 6.2.1.
 
@@ -105,15 +103,10 @@ module ietf-yang-data-ext {
          - instance-identifier data type
 
        The following data-def-stmt sub-statements are constrained
-       when used within a yang-data-resource extension statement.
+       when used within a yang-data extension statement.
 
          - The list-stmt is not required to have a key-stmt defined.
-         - The if-feature-stmt is ignored if present.
          - The config-stmt is ignored if present.
-         - The available identity values for any 'identityref'
-           leaf or leaf-list nodes is limited to the module
-           containing this extension statement, and the modules
-           imported into that module.
       ";
   }
 
@@ -124,14 +117,14 @@ module ietf-yang-data-ext {
     }
     description
       "This extension is used to specify an augmentation to
-       conceptual data defined with the 'yang-data' statement.
+       YANG data structure defined with the 'yang-data' statement.
        It is intended to describe hierarchical data independent
        of protocol context or specific message encoding format.
 
        This statement has almost the same structure as the
        'augment-stmt'. Data definition statements within this
        statement specify the semantics and generic syntax for the
-       additional data to be added to the specific YANG data template,
+       additional data to be added to the specific YANG data structure,
        identified by the 'path' argument.
 
        The mandatory 'path' parameter value identifies the YANG
@@ -171,12 +164,7 @@ module ietf-yang-data-ext {
        when used within a augment-yang-data extension statement.
 
          - The list-stmt is not required to have a key-stmt defined.
-         - The if-feature-stmt is ignored if present.
          - The config-stmt is ignored if present.
-         - The available identity values for any 'identityref'
-           leaf or leaf-list nodes is limited to the module
-           containing this extension statement, and the modules
-           imported into that module.
 
        Example:
 
