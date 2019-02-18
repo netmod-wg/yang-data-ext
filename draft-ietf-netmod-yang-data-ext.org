@@ -40,10 +40,11 @@ other data structure.
 
 ** Terminology
 
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL
-NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED",  "MAY", and
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+"SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
 "OPTIONAL" in this document are to be interpreted as described in
-^RFC2119^.
+BCP 14 ^RFC2119^ ^RFC8174^ when, and only when, they appear in all
+capitals, as shown here.
 
 The following terms are used within this document:
 
@@ -54,7 +55,7 @@ The following terms are used within this document:
 
 The following terms are defined in the
 Network Management Datastore Architecture
-(NMDA) ^I-D.ietf-netmod-revised-datastores^.
+(NMDA) ^RFC8342^.
 and are not redefined here:
 
 - configuration
@@ -118,7 +119,7 @@ to this document and updated.
 RFC Ed.: update the date below with the date of RFC publication and
 remove this note.
 
-!! include-figure ietf-yang-data-ext.yang extract-to="ietf-yang-data-ext@2018-03-05.yang"
+!! include-figure ietf-yang-data-ext.yang extract-to="ietf-yang-data-ext@2019-02-18.yang"
 
 * IANA Considerations @iana@
 
@@ -140,7 +141,6 @@ registry ^RFC6020^:
      // RFC Ed.: replace XXXX with RFC number and remove this note
      reference:    RFC XXXX
 
-
 * Security Considerations
 
 This document defines YANG extensions that are used to define
@@ -158,29 +158,37 @@ beyond those specified in YANG 1.1 ^RFC7950^.
 This example shows a simple address book that could be
 stored as an artifact.
 
-   yd:yang-data example-address-book {
-     container address-book {
-       list address {
-         key "last first";
-         leaf last {
-           type string;
-           description "Last name";
-         }
-         leaf first {
-           type string;
-           description "First name";
-         }
-         leaf street {
-           type string;
-           description "Street name";
-         }
-         leaf city {
-           type string;
-           description "City name";
-         }
-         leaf state {
-           type string;
-           description "State name";
+   module example-module {
+     ...
+
+     import ietf-yang-data-ext {
+       prefix yd;
+     }
+
+     yd:yang-data example-address-book {
+       container address-book {
+         list address {
+           key "last first";
+           leaf last {
+             type string;
+             description "Last name";
+           }
+           leaf first {
+             type string;
+             description "First name";
+           }
+           leaf street {
+             type string;
+             description "Street name";
+           }
+           leaf city {
+             type string;
+             description "City name";
+           }
+           leaf state {
+             type string;
+             description "State name";
+           }
          }
        }
      }
@@ -191,21 +199,37 @@ stored as an artifact.
 This example adds "county" and "zipcode" leafs to
 the address book:
 
-   yd:augment-yang-data /address-book/address {
-     leaf county {
-       type string;
-       description "County name";
+   module example-module-aug {
+     ...
+
+     import ietf-yang-data-ext {
+       prefix yd;
      }
-     leaf zipcode {
-       type string;
-       description "Postal zipcode";
+     import example-module {
+       prefix exm;
+     }
+
+     yd:augment-yang-data '/exm:example-address-book'
+                        + '/exm:address-book/exm:address' {
+       leaf county {
+         type string;
+         description "County name";
+       }
+       leaf zipcode {
+         type string;
+         description "Postal zipcode";
+       }
      }
    }
 
 * Change Log
-#
-#    -- RFC Ed.: remove this section before publication.
-#
+
+RFC Ed.: remove this section before publication.
+
+** v01 to v02
+
+- terminology fixes (use the term "structure" instead of "template")
+- removed limitations on if-feature and identities in YANG structures
 
 ** v00 to v01
 
@@ -214,9 +238,9 @@ the address book:
 - filled in IANA considerations
 
 * Open Issues
-#
-#    -- RFC Ed.: remove this section before publication.
-#
+
+RFC Ed.: remove this section before publication.
+
 The YANG Data Extensions issues are tracked on github.com:
 
    https://github.com/netmod-wg/yang-data-ext/issues
@@ -226,7 +250,7 @@ The YANG Data Extensions issues are tracked on github.com:
     name ;
     ipr trust200902;
     category std;
-    references yang-data-ext-back.xml;
+    references references.xml;
     title "YANG Data Extensions";
     abbreviation "YANG Data Extensions";
     contributor "author:Andy Bierman:YumaWorks:andy@yumaworks.com";

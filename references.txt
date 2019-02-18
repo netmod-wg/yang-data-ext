@@ -1,0 +1,14 @@
+{{references:
+    title "Normative References";
+    ietf-ref RFC2119;
+    ietf-ref RFC7950;
+    ietf-ref RFC8040;
+    ietf-ref RFC8174;
+    ietf-ref RFC8342;
+}}
+
+{{references:
+    title "Informative References";
+    ietf-ref RFC3688;
+    ietf-ref RFC6020;
+}}

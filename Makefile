@@ -1,125 +1,106 @@
 # In case your system doesn't have any of these tools:
 # https://pypi.python.org/pypi/xml2rfc
-# https://github.com/cabo/kramdown-rfc2629
 # https://github.com/Juniper/libslax/tree/master/doc/oxtradoc
-# https://tools.ietf.org/tools/idnits/
+
+draft = draft-ietf-netmod-yang-data-ext.org
+output_base = draft-ietf-netmod-yang-data-ext
+examples =
+trees =
+std_yang =
+ex_yang =
+references_src = references.txt
+references_xml = references.xml
+
+# ----------------------------
+# Shouldn't need to modify anything below this line
+
+ifeq (,$(draft))
+possible_drafts = draft-*.xml draft-*.md draft-*.org
+draft := $(lastword $(sort $(wildcard ${possible_drafts})))
+endif
+
+draft_base = $(basename ${draft})
+draft_type := $(suffix ${draft})
+
+ifeq (,${examples})
+examples = $(wildcard ex-*.xml)
+endif
+load=$(patsubst ex-%.xml,ex-%.load,$(examples))
+
+ifeq (,${std_yang})
+std_yang := $(wildcard ietf*.yang)
+endif
+ifeq (,${ex_yang})
+ex_yang := $(wildcard ex*.yang)
+endif
+yang := $(std_yang) $(ex_yang)
 
 xml2rfc ?= xml2rfc
-kramdown-rfc2629 ?= kramdown-rfc2629
 oxtradoc ?= oxtradoc
 idnits ?= idnits
-
-draft := $(basename $(lastword $(sort $(wildcard draft-*.xml)) $(sort $(wildcard draft-*.md)) $(sort $(wildcard draft-*.org)) ))
+pyang ?= pyang
 
 ifeq (,$(draft))
 $(warning No file named draft-*.md or draft-*.xml or draft-*.org)
 $(error Read README.md for setup instructions)
 endif
 
-draft_type := $(suffix $(firstword $(wildcard $(draft).md $(draft).org $(draft).xml) ))
-
-current_ver := $(shell git tag | grep '$(draft)-[0-9][0-9]' | tail -1 | sed -e"s/.*-//")
+current_ver := $(shell git tag | grep '${output_base}-[0-9][0-9]' | tail -1 | sed -e"s/.*-//")
 ifeq "${current_ver}" ""
 next_ver ?= 00
 else
 next_ver ?= $(shell printf "%.2d" $$((1$(current_ver)-99)))
 endif
-next := $(draft)-$(next_ver)
+output = ${output_base}-${next_ver}
 
 .PHONY: latest submit clean validate
 
-submit: $(next).txt
+submit: ${output}.txt
 
-latest: $(draft).txt $(draft).html
+html: ${output}.html
 
-idnits: $(next).txt
+latest: ${output}.txt
+
+idnits: ${output}.txt
 	$(idnits) $<
 
 clean:
-	-rm -f $(draft).txt $(draft).html index.html
-	-rm -f $(next).txt $(next).html
-	-rm -f $(draft)-[0-9][0-9].xml
-ifeq (.md,$(draft_type))
-	-rm -f $(draft).xml
-endif
-ifeq (.org,$(draft_type))
-	-rm -f $(draft).xml
-endif
+	-rm -f ${output_base}-[0-9][0-9].* ${references_xml} $(load)
+	-rm -f *.dsrl *.rng *.sch ${draft_base}.fxml
 
-validate:
-	pyang --ietf ietf-yang-data-ext.yang
+%.load: %.xml
+	 cat $< | awk -f fix-load-xml.awk > $@
+.INTERMEDIATE: $(load)
 
+example-system.oper.yang: example-system.yang
+	grep -v must $< > $@
+.INTERMEDIATE: example-system.oper.yang
 
-$(next).xml: $(draft).xml
-	sed -e"s/$(basename $<)-latest/$(basename $@)/" $< > $@
+validate: validate-std-yang validate-ex-yang validate-ex-xml
 
-$(draft).xml: yang-data-ext-back.xml ietf-yang-data-ext.yang
+validate-std-yang:
+	pyang --ietf --max-line-length 69 $(std_yang)
 
+validate-ex-yang:
+	pyang --canonical --max-line-length 69 $(ex_yang)
 
-.INTERMEDIATE: $(draft).xml
-%.xml: %.md
-	$(kramdown-rfc2629) $< > $@
+validate-ex-xml: ietf-origin.yang example-system.yang \
+	example-system.oper.yang
+	yang2dsdl -j -x -t data -v ex-intended.xml $< example-system.yang
+	yang2dsdl -j -x -t data -v ex-oper.xml $< example-system.oper.yang
 
-%.xml: %.org
-	$(oxtradoc) -m outline-to-xml -n "$(basename $<)-latest" $< > $@
+${references_xml}: ${references_src}
+	$(oxtradoc) -m mkback $< > $@
 
-%.txt: %.xml
+${output}.xml: ${draft} ${references_xml} $(trees) $(load) $(yang)
+	$(oxtradoc) -m outline-to-xml -n "${output}" $< > $@
+
+${output}.txt: ${output}.xml
 	$(xml2rfc) $< -o $@ --text
 
-ifeq "$(shell uname -s 2>/dev/null)" "Darwin"
-sed_i := sed -i ''
-else
-sed_i := sed -i
-endif
+%.tree: %.yang
+	$(pyang) -f tree --tree-line-length 68 $< > $@
 
-%.html: %.xml
-	$(xml2rfc) $< -o $@ --html
-	$(sed_i) -f .addstyle.sed $@
-
-### Below this deals with updating gh-pages
-
-GHPAGES_TMP := /tmp/ghpages$(shell echo $$$$)
-.TRANSIENT: $(GHPAGES_TMP)
-ifeq (,$(TRAVIS_COMMIT))
-GIT_ORIG := $(shell git branch | grep '*' | cut -c 3-)
-else
-GIT_ORIG := $(TRAVIS_COMMIT)
-endif
-
-# Only run upload if we are local or on the master branch
-IS_LOCAL := $(if $(TRAVIS),,true)
-ifeq (master,$(TRAVIS_BRANCH))
-IS_MASTER := $(findstring false,$(TRAVIS_PULL_REQUEST))
-else
-IS_MASTER :=
-endif
-
-index.html: $(draft).html
-	cp $< $@
-
-ghpages: index.html $(draft).txt
-ifneq (,$(or $(IS_LOCAL),$(IS_MASTER)))
-	mkdir $(GHPAGES_TMP)
-	cp -f $^ $(GHPAGES_TMP)
-	git clean -qfdX
-ifeq (true,$(TRAVIS))
-	git config user.email "ci-bot@example.com"
-	git config user.name "Travis CI Bot"
-	git checkout -q --orphan gh-pages
-	git rm -qr --cached .
-	git clean -qfd
-	git pull -qf origin gh-pages --depth=5
-else
-	git checkout gh-pages
-	git pull
-endif
-	mv -f $(GHPAGES_TMP)/* $(CURDIR)
-	git add $^
-	if test `git status -s | wc -l` -gt 0; then git commit -m "Script updating gh-pages."; fi
-ifneq (,$(GH_TOKEN))
-	@echo git push https://github.com/$(TRAVIS_REPO_SLUG).git gh-pages
-	@git push https://$(GH_TOKEN)@github.com/$(TRAVIS_REPO_SLUG).git gh-pages
-endif
-	-git checkout -qf "$(GIT_ORIG)"
-	-rm -rf $(GHPAGES_TMP)
-endif
+${output}.html: ${draft} ${references_xml} $(trees) $(load) $(yang)
+	@echo "Generating $@ ..."
+	$(oxtradoc) -m html -n "${output}" $< > $@
