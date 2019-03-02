@@ -1,0 +1,11 @@
+"example-module:address-book": {
+  "address": [
+    {
+      "city": "Bedrock",
+      "example-module-aug:zipcode": "70777"
+      "first": "Fred",
+      "last": "Flintstone",
+      "street": "301 Cobblestone Way",
+    }
+  ]
+}

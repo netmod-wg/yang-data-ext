@@ -78,16 +78,18 @@ example-system.oper.yang: example-system.yang
 
 validate: validate-std-yang validate-ex-yang validate-ex-xml
 
-validate-std-yang:
+validate-std-yang: $(std_yang)
 	pyang --ietf --max-line-length 69 $(std_yang)
 
-validate-ex-yang:
+ifneq (,${ex_yang})
+validate-ex-yang: $(ex_yang)
 	pyang --canonical --max-line-length 69 $(ex_yang)
+else
+validate-ex-yang:
+endif
 
-validate-ex-xml: ietf-origin.yang example-system.yang \
-	example-system.oper.yang
-	yang2dsdl -j -x -t data -v ex-intended.xml $< example-system.yang
-	yang2dsdl -j -x -t data -v ex-oper.xml $< example-system.oper.yang
+validate-ex-xml: $(std_yang) $(ex_yang) ex1.xml
+#	yang2dsdl -j -x -t data -v ex1.xml example-module.yang
 
 ${references_xml}: ${references_src}
 	$(oxtradoc) -m mkback $< > $@

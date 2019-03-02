@@ -12,31 +12,30 @@ There is a need for standard mechanisms to allow the
 definition of abstract data that is not intended to
 be implemented as configuration or operational state.
 The "yang-data" extension statement from RFC 8040 ^RFC8040^
-is defined for this purpose, however it is limited in its
+was defined for this purpose but it is limited in its
 functionality.
 
-The intended use of the "yang-data" extension is to model all or part
-of a protocol message, such as the "errors" definition in
-ietf-restconf.yang ^RFC8040^, or the contents of a file.  However,
+The intended use of the "yang-data" extension was to model all or part
+of a protocol message, such as the "errors" definition in the YANG
+module "ietf-restconf" ^RFC8040^, or the contents of a file.  However,
 protocols are often layered such that the header or payload portions
-of the message can be extended by external documents. The YANG
+of the message can be extended by external documents.  The YANG
 statements that model a protocol need to support this extensibility
 that is already found in that protocol.
 
-This document defines a new YANG extension statement called
-"augment-yang-data", which allows abstract data structures to be
+The "yang-data" extension from ^RFC8040^ has been copied here, renamed
+to "structure", and updated to be more flexible.  There is no
+requirement for the "structure" statement to result in exactly one
+container object.  There is no assumption that a YANG data
+structure can only be used as a top-level abstraction, instead of
+nested within some other data structure.
+
+This document also defines a new YANG extension statement called
+"augment-structure", which allows abstract data structures to be
 augmented from external modules, similar to the existing YANG
 "augment" statement.  Note that "augment" cannot be used to augment a
-yang data structure since a YANG compiler or other tool is not
-required to understand the "yang-data" extension.
-
-The "yang-data" extension from ^RFC8040^ has been copied here and
-updated to be more flexible. There is no longer a requirement for the
-"yang-data" statement to result in exactly one container object.
-There is no longer an assumption that a yang data structure can only
-be used as a top-level abstraction, instead of nested within some
-other data structure.
-
+YANG data structure since a YANG compiler or other tool is not
+required to understand the "structure" extension.
 
 ** Terminology
 
@@ -48,7 +47,7 @@ capitals, as shown here.
 
 The following terms are used within this document:
 
-- YANG data structure: A data structure defined with the "yang-data"
+- YANG data structure: A data structure defined with the "structure"
   statement.
 
 *** NMDA
@@ -73,53 +72,12 @@ The following terms are defined in ^RFC7950^:
 - leaf-list
 - list
 
-
-# *** Terms
-#
-# The following terms are used within this document:
-#
-# *** Tree Diagrams
-#
-# A simplified graphical representation of the data model is used in
-# this document.  The meaning of the symbols in these
-# diagrams is defined in ^XXXX^.
-
-* Definitions
-
-** Restrictions on Conceptual YANG Data
-
-This document places restrictions on the "yang-data" external
-statements that can be used with the "yang-data" and
-"augment-yang-data" extensions. The conceptual data definitions
-are considered to be in the same identifier namespace
-as defined in section 6.2.1 of ^RFC7950^. In particular,
-bullet 7:
-
-   All leafs, leaf-lists, lists, containers, choices, rpcs, actions,
-   notifications, anydatas, and anyxmls defined (directly or through
-   a "uses" statement) within a parent node or at the top level of
-   the module or its submodules share the same identifier namespace.
-
-This means that conceptual data defined with the "yang-data"
-or "augment-yang-data" statements cannot have the same local-name
-as sibling nodes from regular YANG data definition statements or
-other "yang-data" or "augment-yang-data" statements.
-
-This does not mean a YANG data structure has to be used as
-a top-level protocol message or other top-level data structure.
-A YANG data structure does not have to result in a single container.
-
-** YANG Data Extensions Module @mod@
-
-The "ietf-yang-data-ext" module defines the "augment-yang-data" extension
-to augment conceptual data already defined with the
-"yang-data" extension. The RESTCONF "yang-data" extension has been moved
-to this document and updated.
+* YANG Data Structure Extensions Module @mod@
 
 RFC Ed.: update the date below with the date of RFC publication and
 remove this note.
 
-!! include-figure ietf-yang-data-ext.yang extract-to="ietf-yang-data-ext@2019-02-18.yang"
+!! include-figure ietf-yang-structure-ext.yang extract-to="ietf-yang-structure-ext@2019-03-02.yang"
 
 * IANA Considerations @iana@
 
@@ -128,99 +86,55 @@ remove this note.
 This document registers one URI as a namespace in the
 "IETF XML Registry" ^RFC3688^:
 
-     URI: urn:ietf:params:xml:ns:yang:ietf-yang-data-ext
-     Registrant Contact: The IESG.
-     XML: N/A; the requested URI is an XML namespace.
+    URI: urn:ietf:params:xml:ns:yang:ietf-yang-structure-ext
+    Registrant Contact: The IESG.
+    XML: N/A; the requested URI is an XML namespace.
 
 This document registers one YANG module in the "YANG Module Names"
 registry ^RFC6020^:
 
-     name:         ietf-yang-data-ext
-     namespace:    urn:ietf:params:xml:ns:yang:ietf-yang-data-ext
-     prefix:       yd
-     // RFC Ed.: replace XXXX with RFC number and remove this note
-     reference:    RFC XXXX
+    name:         ietf-yang-structure-ext
+    namespace:    urn:ietf:params:xml:ns:yang:ietf-yang-structure-ext
+    prefix:       sx
+    // RFC Ed.: replace XXXX with RFC number and remove this note
+    reference:    RFC XXXX
 
 * Security Considerations
 
 This document defines YANG extensions that are used to define
-conceptual YANG data.  It does not introduce any new vulnerabilities
-beyond those specified in YANG 1.1 ^RFC7950^.
+conceptual YANG data structures.  It does not introduce any new
+vulnerabilities beyond those specified in YANG 1.1 ^RFC7950^.
 
-# * Acknowledgements
+# * Acknowledgments
 
 *! start-appendix
 
 * Examples
 
-** yang-data Example
+** "structure" Example
 
-This example shows a simple address book that could be
-stored as an artifact.
+This example shows a simple address book that could be stored as an
+artifact.
 
-   module example-module {
-     ...
+!! include-figure example-module.yang
 
-     import ietf-yang-data-ext {
-       prefix yd;
-     }
+** "augment-structure" Example
 
-     yd:yang-data example-address-book {
-       container address-book {
-         list address {
-           key "last first";
-           leaf last {
-             type string;
-             description "Last name";
-           }
-           leaf first {
-             type string;
-             description "First name";
-           }
-           leaf street {
-             type string;
-             description "Street name";
-           }
-           leaf city {
-             type string;
-             description "City name";
-           }
-           leaf state {
-             type string;
-             description "State name";
-           }
-         }
-       }
-     }
-   }
+This example adds "county" and "zipcode" leafs to the address book:
 
-** augment-yang-data Example
+!! include-figure example-module-aug.yang
 
-This example adds "county" and "zipcode" leafs to
-the address book:
+** XML Encoding Example
 
-   module example-module-aug {
-     ...
+This example shows how an address book can be encoded in XML:
 
-     import ietf-yang-data-ext {
-       prefix yd;
-     }
-     import example-module {
-       prefix exm;
-     }
+!! include-figure ex1.xml
 
-     yd:augment-yang-data '/exm:example-address-book'
-                        + '/exm:address-book/exm:address' {
-       leaf county {
-         type string;
-         description "County name";
-       }
-       leaf zipcode {
-         type string;
-         description "Postal zipcode";
-       }
-     }
-   }
+** JSON Encoding Example
+
+This example shows how an address book can be encoded in JSON:
+
+!! include-figure ex1.json
 
 * Change Log
 
@@ -229,6 +143,7 @@ RFC Ed.: remove this section before publication.
 ** v01 to v02
 
 - terminology fixes (use the term "structure" instead of "template")
+- renamed the statement to "structure" from "yang-data"
 - removed limitations on if-feature and identities in YANG structures
 
 ** v00 to v01
@@ -245,7 +160,6 @@ The YANG Data Extensions issues are tracked on github.com:
 
    https://github.com/netmod-wg/yang-data-ext/issues
 
-
 {{document:
     name ;
     ipr trust200902;
@@ -254,6 +168,6 @@ The YANG Data Extensions issues are tracked on github.com:
     title "YANG Data Extensions";
     abbreviation "YANG Data Extensions";
     contributor "author:Andy Bierman:YumaWorks:andy@yumaworks.com";
-    contributor "author:Martin Bjorklund:Tail-f Systems:mbj@tail-f.com";
-    contributor "author:Kent Watsen:Juniper Networks:kwatsen@juniper.net";
+    contributor "author:Martin Bjorklund:Cisco:mbj@tail-f.com";
+    contributor "author:Kent Watsen:Watsen Networks:kwatsen@watsen.net";
 }}
