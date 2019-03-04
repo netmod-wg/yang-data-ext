@@ -72,6 +72,28 @@ The following terms are defined in ^RFC7950^:
 - leaf-list
 - list
 
+* Definitions
+
+A YANG Data Structure is defined with the "structure" extension
+statement, defined in the YANG module "ietf-yang-structure-ext".  The
+argument to the "structure" extension statement is the name of the
+data structure.  The data structures are considered to be in the same
+identifier namespace as defined in section 6.2.1 of ^RFC7950^. In
+particular, bullet 7:
+
+   All leafs, leaf-lists, lists, containers, choices, rpcs, actions,
+   notifications, anydatas, and anyxmls defined (directly or through
+   a "uses" statement) within a parent node or at the top level of
+   the module or its submodules share the same identifier namespace.
+
+This means that data structures defined with the "structure" statement
+cannot have the same name as sibling nodes from regular YANG data
+definition statements or other "structure" statements in the same YANG
+module.
+
+This does not mean a YANG data structure has to be used as a top-level
+protocol message or other top-level data structure.
+
 * YANG Data Structure Extensions Module @mod@
 
 RFC Ed.: update the date below with the date of RFC publication and
@@ -156,7 +178,7 @@ RFC Ed.: remove this section before publication.
 
 RFC Ed.: remove this section before publication.
 
-The YANG Data Extensions issues are tracked on github.com:
+The YANG Data Structure Extensions issues are tracked on github.com:
 
    https://github.com/netmod-wg/yang-data-ext/issues
 
@@ -165,8 +187,8 @@ The YANG Data Extensions issues are tracked on github.com:
     ipr trust200902;
     category std;
     references references.xml;
-    title "YANG Data Extensions";
-    abbreviation "YANG Data Extensions";
+    title "YANG Data Structure Extensions";
+    abbreviation "YANG Structure";
     contributor "author:Andy Bierman:YumaWorks:andy@yumaworks.com";
     contributor "author:Martin Bjorklund:Cisco:mbj@tail-f.com";
     contributor "author:Kent Watsen:Watsen Networks:kwatsen@watsen.net";
