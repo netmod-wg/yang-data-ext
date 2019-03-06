@@ -5,18 +5,14 @@ module ietf-yang-structure-ext {
 
   organization
     "IETF NETMOD (NETCONF Data Modeling Language) Working Group";
+
   contact
     "WG Web:   <http://tools.ietf.org/wg/netmod/>
      WG List:  <mailto:netmod@ietf.org>
+     Author:   Andy Bierman <mailto:andy@yumaworks.com>
+     Author:   Martin Bjorklund <mailto:mbj@tail-f.com>
+     Author:   Kent Watsen <mailto:kent+ietf@watsen.net>";
 
-     Author:   Andy Bierman
-               <mailto:andy@yumaworks.com>
-
-     Author:   Martin Bjorklund
-               <mailto:mbj@tail-f.com>
-
-     Author:   Kent Watsen
-               <mailto:kwatsen@watsen.net>";
   description
     "This module contains conceptual YANG specifications for defining
      abstract data structures.

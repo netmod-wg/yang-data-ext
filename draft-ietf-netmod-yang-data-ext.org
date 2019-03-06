@@ -191,5 +191,5 @@ The YANG Data Structure Extensions issues are tracked on github.com:
     abbreviation "YANG Structure";
     contributor "author:Andy Bierman:YumaWorks:andy@yumaworks.com";
     contributor "author:Martin Bjorklund:Cisco:mbj@tail-f.com";
-    contributor "author:Kent Watsen:Watsen Networks:kwatsen@watsen.net";
+    contributor "author:Kent Watsen:Watsen Networks:kent+ietf@watsen.net";
 }}
