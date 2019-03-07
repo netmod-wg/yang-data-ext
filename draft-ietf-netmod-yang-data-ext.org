@@ -25,10 +25,8 @@ that is already found in that protocol.
 
 The "yang-data" extension from ^RFC8040^ has been copied here, renamed
 to "structure", and updated to be more flexible.  There is no
-requirement for the "structure" statement to result in exactly one
-container object.  There is no assumption that a YANG data
-structure can only be used as a top-level abstraction, instead of
-nested within some other data structure.
+assumption that a YANG data structure can only be used as a top-level
+abstraction, instead of nested within some other data structure.
 
 This document also defines a new YANG extension statement called
 "augment-structure", which allows abstract data structures to be
@@ -99,7 +97,7 @@ protocol message or other top-level data structure.
 RFC Ed.: update the date below with the date of RFC publication and
 remove this note.
 
-!! include-figure ietf-yang-structure-ext.yang extract-to="ietf-yang-structure-ext@2019-03-02.yang"
+!! include-figure ietf-yang-structure-ext.yang extract-to="ietf-yang-structure-ext@2019-03-07.yang"
 
 * IANA Considerations @iana@
 
@@ -150,13 +148,13 @@ This example adds "county" and "zipcode" leafs to the address book:
 
 This example shows how an address book can be encoded in XML:
 
-!! include-figure ex1.xml
+!! include-figure ex-address-book.load
 
 ** JSON Encoding Example
 
 This example shows how an address book can be encoded in JSON:
 
-!! include-figure ex1.json
+!! include-figure ex-address-book.json
 
 * Change Log
 

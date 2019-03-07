@@ -2,10 +2,10 @@
   "address": [
     {
       "city": "Bedrock",
-      "example-module-aug:zipcode": "70777"
+      "example-module-aug:zipcode": "70777",
       "first": "Fred",
       "last": "Flintstone",
-      "street": "301 Cobblestone Way",
+      "street": "301 Cobblestone Way"
     }
   ]
 }

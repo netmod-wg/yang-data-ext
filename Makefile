@@ -32,6 +32,7 @@ std_yang := $(wildcard ietf*.yang)
 endif
 ifeq (,${ex_yang})
 ex_yang := $(wildcard ex*.yang)
+tmp_ex_yang=$(patsubst %.yang,tmp/%.yang,$(ex_yang))
 endif
 yang := $(std_yang) $(ex_yang)
 
@@ -66,10 +67,21 @@ idnits: ${output}.txt
 
 clean:
 	-rm -f ${output_base}-[0-9][0-9].* ${references_xml} $(load)
-	-rm -f *.dsrl *.rng *.sch ${draft_base}.fxml
+	-rm -rf *.dsrl *.rng *.sch ${draft_base}.fxml tmp
+
+# won't be auto removed, use make clean :(
+# we use this temporarily to do fake-validation of the
+# example, since pyang can't validate sx:structure yet.
+tmp:
+	mkdir tmp
+
+tmp/%.yang: %.yang tmp
+	sed -e 's/sx:structure/container/' \
+	    -e 's/sx:augment-structure/augment/' < $< > $@
+.INTERMEDIATE: $(tmp_ex_yang)
 
 %.load: %.xml
-	 cat $< | awk -f fix-load-xml.awk > $@
+	cat $< | awk -f fix-load-xml.awk > $@
 .INTERMEDIATE: $(load)
 
 example-system.oper.yang: example-system.yang
@@ -88,8 +100,8 @@ else
 validate-ex-yang:
 endif
 
-validate-ex-xml: $(std_yang) $(ex_yang) ex1.xml
-#	yang2dsdl -j -x -t data -v ex1.xml example-module.yang
+validate-ex-xml: $(std_yang) $(tmp_ex_yang) ex-address-book.xml
+	yang2dsdl -j -x -t data -v ex-address-book.xml $(tmp_ex_yang)
 
 ${references_xml}: ${references_src}
 	$(oxtradoc) -m mkback $< > $@

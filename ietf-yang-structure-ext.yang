@@ -5,14 +5,18 @@ module ietf-yang-structure-ext {
 
   organization
     "IETF NETMOD (NETCONF Data Modeling Language) Working Group";
-
   contact
     "WG Web:   <http://tools.ietf.org/wg/netmod/>
      WG List:  <mailto:netmod@ietf.org>
-     Author:   Andy Bierman <mailto:andy@yumaworks.com>
-     Author:   Martin Bjorklund <mailto:mbj@tail-f.com>
-     Author:   Kent Watsen <mailto:kent+ietf@watsen.net>";
 
+     Author:   Andy Bierman
+               <mailto:andy@yumaworks.com>
+
+     Author:   Martin Bjorklund
+               <mailto:mbj@tail-f.com>
+
+     Author:   Kent Watsen
+               <mailto:kent+ietf@watsen.net>";
   description
     "This module contains conceptual YANG specifications for defining
      abstract data structures.
@@ -36,7 +40,7 @@ module ietf-yang-structure-ext {
   // RFC Ed.: update the date below with the date of RFC publication
   // and remove this note.
 
-  revision 2019-03-02 {
+  revision 2019-03-07 {
     description
       "Initial revision.";
     // RFC Ed.: replace XXXX with RFC number and remove this note
@@ -65,9 +69,18 @@ module ietf-yang-structure-ext {
        The mandatory 'name' parameter value identifies the YANG data
        structure that is being defined.
 
-       This extension is only valid as a top-level statement.  It
-       MUST contain data definition statements that define a set of
-       data nodes.
+       This extension is only valid as a top-level statement, i.e.,
+       given as a sub-statement to 'module' or 'submodule'.
+
+       The sub-statements of this extension MUST follow the ABNF
+       rules below, where the rules are defined in RFC 7950:
+
+         *must-stmt
+         [status-stmt]
+         [description-stmt]
+         [reference-stmt]
+         *(typedef-stmt / grouping-stmt)
+         *data-def-stmt
 
        A YANG data structure defined with this extension statement is
        encoded in the same way as an 'anydata' statement.  This means
@@ -78,9 +91,6 @@ module ietf-yang-structure-ext {
        The module name and namespace value for the YANG module using
        the extension statement is assigned to each of the data
        definition statements resulting from the YANG data structure.
-
-       The sub-statements of this extension MUST follow the
-       'data-def-stmt' rule in the YANG ABNF.
 
        The XPath document element is the extension statement itself,
        such that the child nodes of the document element are
@@ -129,9 +139,16 @@ module ietf-yang-structure-ext {
        structure to augment, and the rest of the nodes in the string
        identifies the node within the YANG structure to augment.
 
-       This extension can only appear as a top-level statement. The
-       sub-statements of this extension MUST follow the
-       'data-def-stmt' rule in the YANG ABNF.
+       This extension is only valid as a top-level statement, i.e.,
+       given as a sub-statement to 'module' or 'submodule'.
+
+       The sub-statements of this extension MUST follow the ABNF
+       rules below, where the rules are defined in RFC 7950:
+
+         [status-stmt]
+         [description-stmt]
+         [reference-stmt]
+         1*(data-def-stmt / case-stmt)
 
        The module name and namespace value for the YANG module using
        the extension statement is assigned to instance document data

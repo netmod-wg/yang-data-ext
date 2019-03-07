@@ -1,3 +1,4 @@
+<data xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
 <address-book xmlns="urn:example:example-module">
   <address>
     <last>Flintstone</last>
@@ -7,3 +8,4 @@
     <zipcode xmlns="urn:example:example-module-aug">70777</zipcode>
   </address>
 </address-book>
+</data>
