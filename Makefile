@@ -5,7 +5,7 @@
 draft = draft-ietf-netmod-yang-data-ext.org
 output_base = draft-ietf-netmod-yang-data-ext
 examples =
-trees =
+trees = example-module.tree example-module-aug.tree
 std_yang =
 ex_yang =
 references_src = references.txt
@@ -113,7 +113,7 @@ ${output}.txt: ${output}.xml
 	$(xml2rfc) $< -o $@ --text
 
 %.tree: %.yang
-	$(pyang) -f tree --tree-line-length 68 $< > $@
+	$(pyang) -f tree --tree-line-length 68 --tree-print-structures $< > $@
 
 ${output}.html: ${draft} ${references_xml} $(trees) $(load) $(yang)
 	@echo "Generating $@ ..."

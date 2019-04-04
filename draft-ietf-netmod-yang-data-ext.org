@@ -92,6 +92,39 @@ module.
 This does not mean a YANG data structure has to be used as a top-level
 protocol message or other top-level data structure.
 
+* YANG Data Structures in YANG Tree Diagrams
+
+A YANG Data Structure can be printed in a YANG Tree Diagram
+^RFC8340^.  This document defines two new sections in the tree diagram
+for a module:
+
++ YANG data structures, offset by two spaces and identified by the keyword
+  "structure" followed by the name
+  of the YANG data structure and a colon (":") character.
+
++ YANG data structure augmentations, offset by 2 spaces and identified
+  by the keyword "augment-structure" followed by the augment target
+  structure name and a colon (":") character.
+
+The new sections, including spaces conventions is:
+
+    structure <structure-name>:
+      +--<node>
+         +--<node>
+         |  +--<node>
+         +--<node>
+    structure <structure-name>:
+      +--<node>
+
+    augment-structure <structure-name>:
+      +--<node>
+         +--<node>
+         |  +--<node>
+         +--<node>
+    augment-structure <structure-name>:
+      +--<node>
+
+
 * YANG Data Structure Extensions Module @mod@
 
 RFC Ed.: update the date below with the date of RFC publication and
@@ -138,11 +171,19 @@ artifact.
 
 !! include-figure example-module.yang
 
+Below is the tree diagram of this module.
+
+!! include-figure example-module.tree
+
 ** "augment-structure" Example
 
 This example adds "county" and "zipcode" leafs to the address book:
 
 !! include-figure example-module-aug.yang
+
+Below is the tree diagram of this module.
+
+!! include-figure example-module-aug.tree
 
 ** XML Encoding Example
 
@@ -156,9 +197,26 @@ This example shows how an address book can be encoded in JSON:
 
 !! include-figure ex-address-book.json
 
+** "structure" example that defines a non-top-level structure
+
+The following example defines a data structure with error information,
+that can be included in an <error-info> element in an <rpc-error>.
+
+!! include-figure example-error-info.yang
+
+The example below shows how this structure can be used in an
+<rpc-error>.
+
+!! include-figure example-error-info.xml
+
 * Change Log
 
 RFC Ed.: remove this section before publication.
+
+** v02 to v03
+
+- added YANG tree diagram syntax
+- added more examples
 
 ** v01 to v02
 

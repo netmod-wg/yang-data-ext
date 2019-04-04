@@ -1,0 +1,14 @@
+<rpc-reply message-id="101"
+     xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <rpc-error>
+    <error-type>protocol</error-type>
+    <error-tag>operation-failed</error-tag>
+    <error-severity>error</error-severity>
+    <error-info>
+      <my-example-error-info
+          xmlns="urn:example:example-error-info">
+        <error-code>42</error-code>
+      </my-example-error-info>
+    </error-info>
+  </rpc-error>
+</rpc-reply>
