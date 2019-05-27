@@ -91,9 +91,9 @@ protocol message or other top-level data structure.
 
 * YANG Data Structures in YANG Tree Diagrams
 
-A YANG Data Structure can be printed in a YANG Tree Diagram
-^RFC8340^.  This document defines two new sections in the tree diagram
-for a module:
+A YANG Data Structure can be printed in a YANG Tree Diagram ^RFC8340^.
+This document updates RFC 8340 by defining two new sections in the
+tree diagram for a module:
 
 + YANG data structures, offset by two spaces and identified by the keyword
   "structure" followed by the name
@@ -120,7 +120,6 @@ The new sections, including spaces conventions is:
          +--<node>
     augment-structure <structure-name>:
       +--<node>
-
 
 * YANG Data Structure Extensions Module @mod@
 
@@ -239,6 +238,7 @@ The YANG Data Structure Extensions issues are tracked on github.com:
     name ;
     ipr trust200902;
     category std;
+    updates 8340;
     references references.xml;
     title "YANG Data Structure Extensions";
     abbreviation "YANG Structure";
