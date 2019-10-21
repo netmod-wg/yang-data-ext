@@ -20,14 +20,15 @@ of the message can be extended by external documents.  The YANG
 statements that model a protocol need to support this extensibility
 that is already found in that protocol.
 
-The "yang-data" extension from ^RFC8040^ has been copied here, renamed
-to "structure", and updated to be more flexible.  There is no
-assumption that a YANG data structure can only be used as a top-level
-abstraction, instead of nested within some other data structure.
+This document defines a new YANG extension statement called
+"structure", which is similar to but more flexible than the
+"yang-data" extension from ^RFC8040^.  There is no assumption that a
+YANG data structure can only be used as a top-level abstraction, and
+it may also be nested within some other data structure.
 
 This document also defines a new YANG extension statement called
 "augment-structure", which allows abstract data structures to be
-augmented from external modules, similar to the existing YANG
+augmented from external modules, similarly to the existing YANG
 "augment" statement.  Note that "augment" cannot be used to augment a
 YANG data structure since a YANG compiler or other tool is not
 required to understand the "structure" extension.
