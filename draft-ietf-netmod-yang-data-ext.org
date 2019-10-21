@@ -49,7 +49,7 @@ The following terms are used within this document:
 
 The following terms are defined in the
 Network Management Datastore Architecture
-(NMDA) ^RFC8342^.
+(NMDA) ^RFC8342^,
 and are not redefined here:
 
 - configuration
@@ -69,7 +69,7 @@ The following terms are defined in ^RFC7950^:
 
 * Definitions
 
-A YANG Data Structure is defined with the "structure" extension
+A YANG data structure is defined with the "structure" extension
 statement, defined in the YANG module "ietf-yang-structure-ext".  The
 argument to the "structure" extension statement is the name of the
 data structure.  The data structures are considered to be in the same
@@ -89,9 +89,30 @@ module.
 This does not mean a YANG data structure has to be used as a top-level
 protocol message or other top-level data structure.
 
+A YANG data structure is encoded in the same way as an "anydata" node.
+This means that the name of the structure is encoded as a "container",
+with the instantiated children encoded as child nodes to this
+node.  For example, this structure:
+
+  module example-errors {
+    ...
+
+    sx:structure my-error {
+      leaf error-number {
+        type int;
+      }
+    }
+  }
+
+can be encoded in JSON as:
+
+  "example-errors:my-error": {
+    "error-number": 131
+  }
+
 * YANG Data Structures in YANG Tree Diagrams
 
-A YANG Data Structure can be printed in a YANG Tree Diagram ^RFC8340^.
+A YANG data structure can be printed in a YANG Tree Diagram ^RFC8340^.
 This document updates RFC 8340 by defining two new sections in the
 tree diagram for a module:
 
@@ -209,6 +230,10 @@ The example below shows how this structure can be used in an
 
 RFC Ed.: remove this section before publication.
 
+** v03 to v04
+
+- clarifications after WGLC reviews
+
 ** v02 to v03
 
 - added YANG tree diagram syntax
@@ -225,14 +250,6 @@ RFC Ed.: remove this section before publication.
 - moved open issues to github
 - added examples section
 - filled in IANA considerations
-
-* Open Issues
-
-RFC Ed.: remove this section before publication.
-
-The YANG Data Structure Extensions issues are tracked on github.com:
-
-   https://github.com/netmod-wg/yang-data-ext/issues
 
 {{document:
     name ;

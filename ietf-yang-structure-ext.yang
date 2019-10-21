@@ -83,7 +83,7 @@ module ietf-yang-structure-ext {
          *data-def-stmt
 
        A YANG data structure defined with this extension statement is
-       encoded in the same way as an 'anydata' statement.  This means
+       encoded in the same way as an 'anydata' node.  This means
        that the name of the structure is encoded as a 'container',
        with the instantiated child statements encoded as child nodes
        to this node.
