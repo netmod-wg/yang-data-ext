@@ -7,5 +7,12 @@
     <city>Bedrock</city>
     <zipcode xmlns="urn:example:example-module-aug">70777</zipcode>
   </address>
+  <address>
+    <last>Root</last>
+    <first>Charlie</first>
+    <street>4711 Cobblestone Way</street>
+    <city>Bedrock</city>
+    <zipcode xmlns="urn:example:example-module-aug">70777</zipcode>
+  </address>
 </address-book>
 </data>

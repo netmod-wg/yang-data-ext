@@ -87,8 +87,8 @@ cannot have the same name as sibling nodes from regular YANG data
 definition statements or other "structure" statements in the same YANG
 module.
 
-This does not mean a YANG data structure has to be used as a top-level
-protocol message or other top-level data structure.
+This does not mean a YANG data structure, once defined, has to be used
+as a top-level protocol message or other top-level data structure.
 
 A YANG data structure is encoded in the same way as an "anydata" node.
 This means that the name of the structure is encoded as a "container",
@@ -127,21 +127,24 @@ tree diagram for a module:
 
 The new sections, including spaces conventions is:
 
-    structure <structure-name>:
-      +--<node>
-         +--<node>
-         |  +--<node>
-         +--<node>
-    structure <structure-name>:
-      +--<node>
+  structure <structure-name>:
+    +--<node>
+       +--<node>
+       |  +--<node>
+       +--<node>
+  structure <structure-name>:
+    +--<node>
 
-    augment-structure <structure-name>:
-      +--<node>
-         +--<node>
-         |  +--<node>
-         +--<node>
-    augment-structure <structure-name>:
-      +--<node>
+  augment-structure <structure-name>:
+    +--<node>
+       +--<node>
+       |  +--<node>
+       +--<node>
+  augment-structure <structure-name>:
+    +--<node>
+
+Nodes in YANG data structures are printed according to the rules
+defined in section 2.6 in ^RFC8340^.
 
 * YANG Data Structure Extensions Module @mod@
 

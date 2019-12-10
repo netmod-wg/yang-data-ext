@@ -6,6 +6,13 @@
       "first": "Fred",
       "last": "Flintstone",
       "street": "301 Cobblestone Way"
+    },
+    {
+      "city": "Bedrock",
+      "example-module-aug:zipcode": "70777",
+      "first": "Charlie",
+      "last": "Root",
+      "street": "4711 Cobblestone Way"
     }
   ]
 }
