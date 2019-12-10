@@ -230,30 +230,6 @@ The example below shows how this structure can be used in an
 
 !! include-figure example-error-info.xml
 
-* Change Log
-
-RFC Ed.: remove this section before publication.
-
-** v03 to v04
-
-- clarifications after WGLC reviews
-
-** v02 to v03
-
-- added YANG tree diagram syntax
-- added more examples
-
-** v01 to v02
-
-- terminology fixes (use the term "structure" instead of "template")
-- renamed the statement to "structure" from "yang-data"
-- removed limitations on if-feature and identities in YANG structures
-
-** v00 to v01
-
-- moved open issues to github
-- added examples section
-- filled in IANA considerations
 
 {{document:
     name ;
